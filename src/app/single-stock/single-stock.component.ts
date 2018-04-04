@@ -14,16 +14,17 @@ export class SingleStockComponent implements OnInit {
   constructor(public dialog: MatDialog) { }
   openBuyDialog(): void {
     const dialogRef = this.dialog.open(BuyDialogComponent, {
-      width: '250px',
-      data: { /*name: this.name, animal: this.animal*/ }
+      width: '40vw',
+      height: '20vh',
+      data: {SingleStock: this.data}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      //this.animal = result;
     });
   }
   ngOnInit() {
   }
 
 }
+

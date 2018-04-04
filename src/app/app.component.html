@@ -2,14 +2,15 @@
 
 <div class="image">
   <h1 class="mat-h1">Stock Market Data</h1>
-
   <div class="dataDisplay">
     <mat-card>
       <mat-card-content fxLayout="row"
-                        fxLayoutAlign="start center">
+                        fxLayoutAlign="space-around center">
         <mat-card-title fxFlex="30">Stock Name</mat-card-title>
         <mat-card-title fxFlex="30">Stock Price</mat-card-title>
-        <mat-card-title >Change</mat-card-title>
+        <mat-card-title fxFlex="30" >Change</mat-card-title>
+
+      <div class="myAccount" fxFlex="11" (click)="openUserAccDialog()"><img src="../assets/images/bag_icon.png"></div>
       </mat-card-content>
     </mat-card>
 

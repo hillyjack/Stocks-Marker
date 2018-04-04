@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {SingleStock} from '../../../model/single-stock';
 
 @Component({
   selector: 'app-buy-dialog',
@@ -7,9 +8,12 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
   styleUrls: ['./buy-dialog.component.css']
 })
 export class BuyDialogComponent implements OnInit {
-
+  buyDetails: SingleStock;
   constructor(public dialogRef: MatDialogRef<BuyDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) { }
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+    console.log(data);
+    this.buyDetails = data.SingleStock;
+  }
 
   onNoClick(): void {
     this.dialogRef.close();

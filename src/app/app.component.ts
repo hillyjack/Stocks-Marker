@@ -5,6 +5,9 @@ import {Observable} from 'rxjs/Observable';
 import {SingleStock} from '../../model/single-stock';
 
 import {WebSocketService} from '../services/web-socket.service';
+import {BuyDialogComponent} from './buy-dialog/buy-dialog.component';
+import {UserAccountComponent} from './user-account/user-account.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +17,7 @@ import {WebSocketService} from '../services/web-socket.service';
 export class AppComponent implements OnInit {
   StocksData: SingleStock[] = [];
 
-  constructor(private http: HttpClient, private ioService: WebSocketService) {
+  constructor(private http: HttpClient, private ioService: WebSocketService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -27,6 +30,17 @@ export class AppComponent implements OnInit {
       .subscribe((data) => {
       console.log('getSocketsPrice ');
       this.StocksData = data.result;
+    });
+  }
+  openUserAccDialog(): void {
+    const dialogRef = this.dialog.open(UserAccountComponent, {
+      width: '60vw',
+      height: '80vh',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
     });
   }
 

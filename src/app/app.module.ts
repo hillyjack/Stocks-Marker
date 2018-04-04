@@ -10,6 +10,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {HttpClientModule} from '@angular/common/http';
 import {WebSocketService} from '../services/web-socket.service';
 import { BuyDialogComponent } from './buy-dialog/buy-dialog.component';
+import { UserAccountComponent } from './user-account/user-account.component';
 
 
 @NgModule({
@@ -17,6 +18,12 @@ import { BuyDialogComponent } from './buy-dialog/buy-dialog.component';
     AppComponent,
     SingleStockComponent,
     BuyDialogComponent,
+    UserAccountComponent,
+    UserAccountComponent
+  ],
+  entryComponents: [
+    BuyDialogComponent,
+    UserAccountComponent
   ],
   imports: [
     BrowserModule,
