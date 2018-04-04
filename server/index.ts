@@ -1,5 +1,6 @@
 import app from './App';
-import  * as Http from 'http-server';
+import * as Http from 'http';
+
 const http = Http.Server(app.expressApp);
 const port =  3000;
 
