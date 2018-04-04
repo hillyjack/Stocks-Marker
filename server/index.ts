@@ -1,8 +1,10 @@
 import app from './App';
-import * as Http from 'http';
 
-const http = Http.Server(app.expressApp);
-const port =  3000;
+const http = require('http').Server(app.expressApp);
+const port =  process.env.PORT || 3000;
+
+const io = require('socket.io')(http);
+app.init(io);
 
 console.log('say something ');
 

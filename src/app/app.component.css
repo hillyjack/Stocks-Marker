@@ -4,6 +4,7 @@
   margin-top: 0;
   background-size:contain;
   width:100%;
+  height: max-content;
   background-image:url('../assets/images/connected.jpg');
   background-repeat: repeat-y;
 }
@@ -27,6 +28,7 @@
 .dataDisplay{
   width: 80%;
   margin: 0 auto;
+  margin-bottom: 20vh;
 }
 
 mat-card {

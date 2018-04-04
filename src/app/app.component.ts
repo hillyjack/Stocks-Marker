@@ -34,3 +34,4 @@ export class AppComponent implements OnInit {
     return this.http.get<SingleStock[]>('/stocks');
   }
 }
+

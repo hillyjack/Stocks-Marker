@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCardModule, MatCheckboxModule} from '@angular/material';
 import {MatTableModule} from '@angular/material/table';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -12,8 +13,9 @@ import {MatTableModule} from '@angular/material/table';
     MatCheckboxModule,
     MatCardModule,
     MatTableModule,
+    MatDialog
   ],
-  exports: [MatButtonModule, MatCheckboxModule, MatCardModule, MatTableModule ],
+  exports: [MatButtonModule, MatCheckboxModule, MatCardModule, MatTableModule, MatDialog ],
   declarations: []
 })
 export class AngularMatModule { }

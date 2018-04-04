@@ -16,8 +16,6 @@ export class App {
     this.expressApp.use(express.static('website'));
     this.middleware();
     this.mountRoutes();
-    this.io = socketIo.listen(require('http').Server(this.expressApp));
-
 
     this.expressApp.use(function (req, res, next) {
       res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
@@ -35,6 +33,10 @@ export class App {
       // Pass to next layer of middleware
       next();
     });
+  }
+
+  public init(io: any) {
+    this.io = io;
   }
 
   private middleware(): void {
@@ -70,31 +72,35 @@ export class App {
     });
   }
   loadSingleStockData (): void {
-    this.StocksData.push(new SingleStock('Teva', 1000, 12));
-    this.StocksData.push(new SingleStock('Google', 1200, 15));
+    this.StocksData.push(new SingleStock('Teva', 11000, 12));
+    this.StocksData.push(new SingleStock('Google', 21200, 15));
     this.StocksData.push(new SingleStock('Facebook', 12200, 25));
     this.StocksData.push(new SingleStock('RDV', 45000, 26));
-    this.StocksData.push(new SingleStock('Drivenets', 28003000, 24));
-   this.startPublisher();
+    this.StocksData.push(new SingleStock('Drivenets', 99003, 24));
+    setInterval(() => {
+      this.changeStockCurrentPrice();
+    }, 5000);
   }
   changeStockCurrentPrice(): void {
     console.log('changeStockCurrentPrice');
     for (let i = 0; i < this.StocksData.length; i++) {
       console.log('in for ', i);
-      const integer = this.generateRandomInteger((-1) * this.StocksData[i].change, this.StocksData[i].change);
+      const integer = this.generateRandomInteger((-10) * this.StocksData[i].change, 10 * this.StocksData[i].change);
       this.StocksData[i].CurrentPrice += integer ;
-      (integer + 50) < 0 ? this.StocksData[i].changeDir = false : this.StocksData[i].changeDir = true ;
+      integer < 0 ? this.StocksData[i].changeDir = false : this.StocksData[i].changeDir = true ;
       console.log('this.StocksData[i].changeDir ', this.StocksData[i].changeDir);
       console.log('end', this.StocksData[i].CurrentPrice += integer);
       this.StocksData[i].change = ((this.StocksData[i].CurrentPrice - this.StocksData[i].StartingPrice) / this.StocksData[i].StartingPrice) * 100;
     }
-
+    this.io.emit('priceUpdated', {result: this.StocksData});
     console.log('emitted');
   }
-  startPublisher(){
+
+  startPublisher() {
     setInterval(() => {
+      debugger
       this.io.emit('priceUpdated', {result: this.StocksData});
-    },5000);
+    }, 5000);
   }
 
 
