@@ -1,0 +1,35 @@
+
+
+.image{
+  margin-top: 0;
+  background-size:contain;
+  width:100%;
+  background-image:url('../assets/images/connected.jpg');
+  background-repeat: repeat-y;
+}
+
+
+.mat-h1{
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: 7vh;
+  padding-top: 7vh;
+  font-size: 8vh;
+  font-weight: bold;
+  color: white;
+}
+
+.mat-card-title{
+  margin-bottom: 11px!important;
+  font-size: 5vh;
+  font-weight: 100;
+}
+.dataDisplay{
+  width: 80%;
+  margin: 0 auto;
+}
+
+mat-card {
+  background-color: grey;
+  color: #1c2e6c;
+}

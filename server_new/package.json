@@ -1,0 +1,17 @@
+{
+  "scripts": {
+    "build": "tsc -p ./",
+    "start": "npm run build"
+  },
+  "name": "stock-market",
+  "version": "0.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "typescript": "^2.8.1",
+    "socket.io": "^2.1.0",
+    "http": "^0.0.0",
+    "require": "^2.4.20"
+  }
+}

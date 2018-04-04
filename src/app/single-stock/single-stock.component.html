@@ -1,0 +1,20 @@
+<mat-card >
+  <mat-card-content fxLayout="row"
+                    fxLayoutAlign="space-between center">
+    <div fxFlex="10">
+      <mat-card-title>{{data.stockMarketIndex}}</mat-card-title>
+      <mat-card-subtitle>{{data.changeDir}}</mat-card-subtitle>
+    </div>
+    <div>
+      <p>{{data.CurrentPrice}}</p>
+    </div>
+    <div>
+      <p>{{data.change| number : '1.2-2'}}%</p>
+    </div>
+    <mat-card-actions fxFlex="10" fxLayout="column"
+                      fxLayoutAlign="space-around center">
+      <button mat-raised-button>Buy</button>
+      <!--<button mat-button>Sell</button>-->
+    </mat-card-actions>
+  </mat-card-content>
+</mat-card>
