@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SingleStock} from '../../../model/single-stock';
+import {BuyDialogComponent} from '../buy-dialog/buy-dialog.component';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-single-stock',
@@ -11,14 +13,14 @@ export class SingleStockComponent implements OnInit {
   data: SingleStock;
   constructor(public dialog: MatDialog) { }
   openBuyDialog(): void {
-    let dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+    const dialogRef = this.dialog.open(BuyDialogComponent, {
       width: '250px',
-      data: { name: this.name, animal: this.animal }
+      data: { /*name: this.name, animal: this.animal*/ }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.animal = result;
+      //this.animal = result;
     });
   }
   ngOnInit() {

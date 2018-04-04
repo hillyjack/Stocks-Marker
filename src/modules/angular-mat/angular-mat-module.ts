@@ -13,9 +13,10 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
     MatCheckboxModule,
     MatCardModule,
     MatTableModule,
-    MatDialog
+    MatDialog,
+    MatDialogRef
   ],
-  exports: [MatButtonModule, MatCheckboxModule, MatCardModule, MatTableModule, MatDialog ],
+  exports: [MatButtonModule, MatCheckboxModule, MatCardModule, MatTableModule, MatDialog, MatDialogRef ],
   declarations: []
 })
 export class AngularMatModule { }

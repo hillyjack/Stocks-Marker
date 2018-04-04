@@ -9,12 +9,14 @@ import {AngularMatModule} from '../modules/angular-mat/angular-mat-module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {HttpClientModule} from '@angular/common/http';
 import {WebSocketService} from '../services/web-socket.service';
+import { BuyDialogComponent } from './buy-dialog/buy-dialog.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SingleStockComponent,
+    BuyDialogComponent,
   ],
   imports: [
     BrowserModule,
