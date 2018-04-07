@@ -4,6 +4,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCardModule, MatCheckboxModule} from '@angular/material';
 import {MatTableModule} from '@angular/material/table';
 import { MatDialogModule } from '@angular/material';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
   imports: [
@@ -13,9 +15,11 @@ import { MatDialogModule } from '@angular/material';
     MatCheckboxModule,
     MatCardModule,
     MatTableModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule,
+    MatFormFieldModule
   ],
-  exports: [MatButtonModule, MatCheckboxModule, MatCardModule, MatTableModule, MatDialogModule],
+  exports: [MatButtonModule, MatCheckboxModule, MatCardModule, MatTableModule, MatDialogModule, MatSelectModule, MatFormFieldModule],
   declarations: []
 })
 export class AngularMatModule { }

@@ -1,0 +1,40 @@
+
+
+p{
+  font-size: 2vh;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+}
+
+.mat-card-title{
+
+  margin-bottom: 11px!important;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 4vh;
+  font-weight: 200;
+  color: #1c2e6c;
+}
+
+/*mat-select{
+  width: 4vw;
+}*/
+.mat-input-infix mat-form-field-infix{
+  width: 40px;
+
+}
+
+div.mat-input-wrapper{
+  margin-left: 2vw;
+  width: 40px;
+}
+
+div.mat-input-flex mat-form-field-flex{
+  text-align: center;
+}
+
+mat-option{
+  text-align: center;
+}
+
+.mat-form-field{
+  text-align: center;
+}

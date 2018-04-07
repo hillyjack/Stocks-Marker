@@ -11,6 +11,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {WebSocketService} from '../services/web-socket.service';
 import { BuyDialogComponent } from './buy-dialog/buy-dialog.component';
 import { UserAccountComponent } from './user-account/user-account.component';
+import { UserStockComponent } from './user-stock/user-stock.component';
 
 
 @NgModule({
@@ -19,11 +20,12 @@ import { UserAccountComponent } from './user-account/user-account.component';
     SingleStockComponent,
     BuyDialogComponent,
     UserAccountComponent,
-    UserAccountComponent
+    UserStockComponent
   ],
   entryComponents: [
     BuyDialogComponent,
-    UserAccountComponent
+    UserAccountComponent,
+    UserStockComponent
   ],
   imports: [
     BrowserModule,

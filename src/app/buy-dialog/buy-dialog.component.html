@@ -1,13 +1,28 @@
 
-<mat-card-title fxFlex="30">Buy {{buyDetails.stockMarketIndex}}</mat-card-title>
 
-<mat-card-content fxLayout="row"
-                  fxLayoutAlign="space-between center">
-  <div fxFlex="30">
-    <mat-card-title>{{data.stockMarketIndex}}</mat-card-title>
-    <h3>Price: {{buyDetails.CurrentPrice}}</h3>
+
+<mat-card-title>Buy {{buyDetails.stockMarketIndex}}</mat-card-title>
+<mat-card-subtitle> User Id: {{userId}}</mat-card-subtitle>
+<mat-card-content>
+  <div>
+    <p>Price: {{buyDetails.CurrentPrice}}</p>
+    <div fxLayout="row"
+         fxLayoutAlign="start center">
+      <p fxFlex="20">Amount: </p>
+      <mat-form-field fxFlex="18">
+        <mat-select placeholder="" [(value)]="selected">
+          <mat-option *ngFor="let num of amountArr" [value]="num" >
+            {{ num }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <p>Total Price: {{selected * buyDetails.CurrentPrice}}</p>
+    <mat-card-actions fxLayout="row"
+                      fxLayoutAlign="space-around center">
+      <button (click)="onBuyClick()" fxFlex="20" mat-raised-button >Buy</button>
+      <button (click)="onNoClick()" fxFlex="20" mat-raised-button >Cancel</button>
+    </mat-card-actions>
   </div>
-  <mat-card-actions fxFlex="30">
-    <button mat-raised-button >Buy</button>
-  </mat-card-actions>
+
 </mat-card-content>

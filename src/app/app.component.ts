@@ -8,6 +8,7 @@ import {WebSocketService} from '../services/web-socket.service';
 import {BuyDialogComponent} from './buy-dialog/buy-dialog.component';
 import {UserAccountComponent} from './user-account/user-account.component';
 import {MatDialog} from '@angular/material';
+import {UserStocks} from '../../model/user-stocks';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ import {MatDialog} from '@angular/material';
 })
 export class AppComponent implements OnInit {
   StocksData: SingleStock[] = [];
+  userId = 111;
 
   constructor(private http: HttpClient, private ioService: WebSocketService, public dialog: MatDialog) {
   }
@@ -33,15 +35,30 @@ export class AppComponent implements OnInit {
     });
   }
   openUserAccDialog(): void {
+    let userStocks;
+    setTimeout(() => {
+    this.getUserStocks().subscribe((data) => {
+      console.log('getUserStocks ');
+      userStocks = data.result;
+      console.log('userStocks ', userStocks);
+    });
+    if (!userStocks) {
+      userStocks = 0;
+    }
     const dialogRef = this.dialog.open(UserAccountComponent, {
       width: '60vw',
       height: '80vh',
-      data: {}
+      data: {userStocks: userStocks}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+    }, 0);
+  }
+
+  getUserStocks(): Observable<any> {
+    return this.http.get<any>('/getUserStocks/' + this.userId);
   }
 
   dataFromBackend(): Observable<any> {

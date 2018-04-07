@@ -13,3 +13,21 @@ mat-card-actions{
 .mat-raised-button{
   font-size: 2.3vh;
 }
+
+.arrow-image{
+  width: 2vw;
+  height: initial;
+  margin-right: 2vw;
+
+}
+
+.red-arrow{
+  width: 100%;
+  height: 100%;
+  background-image:url('../../assets/images/Red_Arrow_Down.png');
+}
+
+.arrow-image img{
+  width: 2vw;
+  height: auto;
+}

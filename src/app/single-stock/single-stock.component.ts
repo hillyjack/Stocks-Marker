@@ -11,12 +11,15 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 export class SingleStockComponent implements OnInit {
   @Input()
   data: SingleStock;
+  @Input()
+  userId: number;
+
   constructor(public dialog: MatDialog) { }
   openBuyDialog(): void {
     const dialogRef = this.dialog.open(BuyDialogComponent, {
-      width: '40vw',
-      height: '20vh',
-      data: {SingleStock: this.data}
+      width: '30vw',
+      height: '35vh',
+      data: {SingleStock: this.data, userId: this.userId}
     });
 
     dialogRef.afterClosed().subscribe(result => {
