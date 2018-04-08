@@ -14,7 +14,7 @@ export class SingleStockComponent implements OnInit {
   @Input()
   userId: number;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog) {}
   openBuyDialog(): void {
     const dialogRef = this.dialog.open(BuyDialogComponent, {
       width: '30vw',

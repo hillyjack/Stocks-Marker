@@ -36,25 +36,23 @@ export class AppComponent implements OnInit {
   }
   openUserAccDialog(): void {
     let userStocks;
-    setTimeout(() => {
     this.getUserStocks().subscribe((data) => {
       console.log('getUserStocks ');
       userStocks = data.result;
       console.log('userStocks ', userStocks);
-    });
-    if (!userStocks) {
-      userStocks = 0;
-    }
-    const dialogRef = this.dialog.open(UserAccountComponent, {
-      width: '60vw',
-      height: '80vh',
-      data: {userStocks: userStocks}
-    });
+      if (!userStocks) {
+        userStocks = 0;
+      }
+      const dialogRef = this.dialog.open(UserAccountComponent, {
+        width: '100vw',
+        height: '80vh',
+        data: {userStocks: userStocks, StocksData: this.StocksData }
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
     });
-    }, 0);
   }
 
   getUserStocks(): Observable<any> {

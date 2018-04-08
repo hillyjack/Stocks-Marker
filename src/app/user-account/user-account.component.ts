@@ -15,11 +15,13 @@ export class UserAccountComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<UserAccountComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
     this.userStocks = data.userStocks;
-    console.log(this.userStocks);
+    this.StocksData = data.StocksData;
+    console.log('this.userStocks', this.userStocks);
+    console.log('this.StocksData ', this.StocksData);
   }
 
   ngOnInit() {
-    if (this.userStocks) {
+    if (!this.userStocks) {
       alert('User Have No Purchases');
     }
   }

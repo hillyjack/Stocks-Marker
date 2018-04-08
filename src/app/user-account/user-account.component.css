@@ -1,0 +1,25 @@
+
+.mat-h1{
+  width: 80%;
+  margin-bottom: 4vh;
+  padding-top: 4vh;
+  font-size: 4vh;
+  font-weight: 400;
+  color: black;
+}
+
+.mat-card-title{
+  margin-bottom: 11px!important;
+  font-size: 3vh;
+  font-weight: 100;
+}
+.dataDisplay{
+  width: 98%;
+  margin: 0 auto;
+  margin-bottom: 20vh;
+}
+
+mat-card {
+  background-color: grey;
+  color: #1c2e6c;
+}

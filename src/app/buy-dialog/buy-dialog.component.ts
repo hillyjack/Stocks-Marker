@@ -33,6 +33,7 @@ export class BuyDialogComponent implements OnInit {
   }
   onBuyClick(): void {
     if (this.selected) {
+
       // const buyUserStock = new UserStocks(this.userId, this.buyDetails.stockMarketID, this.selected, this.buyDetails.CurrentPrice);
       console.log('buyStock ', this.userId, this.buyDetails.stockMarketID, this.selected, this.buyDetails.CurrentPrice);
       this.buyStock(this.userId, this.buyDetails.stockMarketID, this.selected, this.buyDetails.CurrentPrice).subscribe((data) => {

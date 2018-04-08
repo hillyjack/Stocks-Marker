@@ -14,15 +14,16 @@ export class UserStockComponent implements OnInit {
   StocksData: SingleStock[];
   CurrentStockData: SingleStock;
   constructor() {
-    console.log('UserStockComponent ', this.data);
-    console.log(this.StocksData);
   }
 
   ngOnInit() {
+    console.log('UserStockComponent ', this.data);
+    console.log('this.StocksData ', this.StocksData);
     for (let i = 0; i < this.StocksData.length; i++) {
-      if (this.StocksData[i].stockMarketID === this.data.stockMarketID) {
+      if (this.StocksData[i].stockMarketID === Number(this.data.stockMarketID)) {
         this.CurrentStockData = this.StocksData[i];
         console.log(this.CurrentStockData);
+        break;
       }
     }
   }

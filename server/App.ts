@@ -10,7 +10,7 @@ export class App {
   expressApp: any;
   io: any;
   // userAccount: UserStocks[] = [];
-  usersAccountsArrById: any = {};
+  usersAccountsArrById: any = {};// Map
   // userAccountManager: any;
 
 
@@ -20,23 +20,6 @@ export class App {
     this.expressApp.use(express.static('website'));
     this.middleware();
     this.mountRoutes();
-
-    this.expressApp.use(function (req, res, next) {
-      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-
-      // Request methods you wish to allow
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-      // Request headers you wish to allow
-      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-      // Set to true if you need the website to include cookies in the requests sent
-      // to the API (e.g. in case you use sessions)
-      res.setHeader('Access-Control-Allow-Credentials', true);
-
-      // Pass to next layer of middleware
-      next();
-    });
   }
 
 
@@ -57,12 +40,13 @@ export class App {
       console.log(this.usersAccountsArrById);
       response.json({result: 1});
     });
+
+
     /*buyStocks*/
     router.get('/stocks/buy/:userId/:stockMarketID/:stockAmount/:purchasePrice', (request, response) => {
       console.log('Lets buyyyyy ');
-      let data: UserStocks;
+      const data: UserStocks = request.params;
       console.log('data ', request.params);
-      data = request.params;
       console.log('data.userId ', data.userId);
       console.log('this.usersAccountsArrById ', this.usersAccountsArrById);
       console.log('this.usersAccountsArrById[data.userId] ', this.usersAccountsArrById[data.userId]);
@@ -70,6 +54,7 @@ export class App {
       console.log('userAccount ', userAccount);
       const buyUserStock = new UserStocks(data.userId, data.stockMarketID, data.stockAmount, data.purchasePrice);
       userAccount.push(buyUserStock);
+      console.log('buyUserStock ', buyUserStock);
       response.json({result: 1});
       console.log(this.usersAccountsArrById);
     });
@@ -90,25 +75,25 @@ export class App {
     router.get('/stocks/sell/:user', (request, response) => {
       let data;
       data = request.params;
-      response.send('some some some ' + data.user);
     });
   }
 
   private initUserAccountIfNeeded(userId) {
     console.log('this.usersAccountsArrById ');
     let userIdExist;
-    for (const key in this.usersAccountsArrById) {
+/*    for (const key in this.usersAccountsArrById) {
       console.log('in the for of this.usersAccountsArrById ', this.usersAccountsArrById);
       if (key === userId) {
         userIdExist = true;
         break;
       }
-    }
+    }*/
+    this.usersAccountsArrById[userId] = this.usersAccountsArrById[userId] ?  this.usersAccountsArrById[userId] : [];
 
-    if (!userIdExist) {
+    /*if (!userIdExist) {
       // this.usersAccountsArrById[userId] = {};
       this.usersAccountsArrById[userId] = [];
-    }
+    }*/
   }
 
 
@@ -120,7 +105,7 @@ export class App {
     this.StocksData.push(new SingleStock(5, 'Drivenets', 99003, 24));
     setInterval(() => {
       this.changeStockCurrentPrice();
-    }, 50000);
+    }, 10000);
   }
 
   private changeStockCurrentPrice(): void {
@@ -129,12 +114,11 @@ export class App {
 
       console.log('in for ', i);
       const integer = this.generateRandomInteger((-100) + this.StocksData[i].change, 100 + this.StocksData[i].change);
-      console.log('integer  ',integer);
+      console.log('integer  ', integer);
       const startingPrice =  this.StocksData[i].StartingPrice;
       const prevCurrentPrice = this.StocksData[i].CurrentPrice;
-      const currentPrice = this.StocksData[i].CurrentPrice + integer;
-      //console.log('this.StocksData[i].changeDir ', this.StocksData[i].changeDir);
-      //console.log('end', this.StocksData[i].CurrentPrice += integer);
+      this.StocksData[i].CurrentPrice += integer;
+      const currentPrice = this.StocksData[i].CurrentPrice;
       this.StocksData[i].dailyChange = ((currentPrice - startingPrice) / startingPrice) * 100;
       this.StocksData[i].change = ((currentPrice - prevCurrentPrice) / prevCurrentPrice) * 100;
       this.StocksData[i].dailyChange  < 0 ? this.StocksData[i].changeDir = false : this.StocksData[i].changeDir = true;
