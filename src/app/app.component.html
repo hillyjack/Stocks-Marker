@@ -16,7 +16,7 @@
     </mat-card>
 
     <app-single-stock
-                      *ngFor='let item of StocksData'
+                      *ngFor='let item of StocksData ;trackBy: trackByFn'
                       [userId] = "userId"
                       [data] = "item"
                       (createUserAcc) = "createUserAcc($event)"

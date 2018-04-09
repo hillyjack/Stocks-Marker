@@ -28,7 +28,7 @@ export class UserStockComponent implements OnInit {
   }
 
   onSellButton(): void {
-    const sellData = Object.assign({StockData : this.CurrentStockData, UserStocks: this.data })
+    const sellData = Object.assign({StockData : this.CurrentStockData, UserStocks: this.data})
     this.sellStock.emit(sellData);
   }
 

@@ -31,8 +31,9 @@ export class AppComponent implements OnInit {
       this.StocksData = data.result;
     });
   }
-
-
+  trackByFn(item){
+    return item.stockMarketID || null;
+  }
   openUserAccDialog(): void {
     let userStocks;
     this.httpService.getUserStocks(this.userId).subscribe((data) => {
