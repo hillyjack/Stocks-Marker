@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SingleStock} from '../../../model/single-stock';
 import {BuyDialogComponent} from '../buy-dialog/buy-dialog.component';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
@@ -13,6 +13,10 @@ export class SingleStockComponent implements OnInit {
   data: SingleStock;
   @Input()
   userId: number;
+  @Output()
+  userBoughtStock: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  createUserAcc: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(public dialog: MatDialog) {}
   openBuyDialog(): void {
@@ -23,11 +27,14 @@ export class SingleStockComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log('The dialog was closed res, ', result);
+      if (result) {
+        this.userBoughtStock.emit(result);
+        console.log('this.userBoughtStock.emit');
+      }
     });
   }
   ngOnInit() {
   }
-
 }
 

@@ -22,7 +22,7 @@
         <img *ngIf="!(CurrentStockData.CurrentPrice - data.purchasePrice > 0)" src="../../assets/images/Red_Arrow_Down.png">
         <img *ngIf="(CurrentStockData.CurrentPrice - data.purchasePrice > 0)" src="../../assets/images/Green_Arrow_Up.png">
       </div>
-      <button  mat-raised-button>Sell</button>
+      <button (click)="onSellButton()" mat-raised-button>Sell</button>
       <!--<button mat-button>Sell</button>-->
     </mat-card-actions>
   </mat-card-content>

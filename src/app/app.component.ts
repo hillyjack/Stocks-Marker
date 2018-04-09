@@ -1,14 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-
-import {Observable} from 'rxjs/Observable';
 import {SingleStock} from '../../model/single-stock';
 
 import {WebSocketService} from '../services/web-socket.service';
-import {BuyDialogComponent} from './buy-dialog/buy-dialog.component';
 import {UserAccountComponent} from './user-account/user-account.component';
 import {MatDialog} from '@angular/material';
-import {UserStocks} from '../../model/user-stocks';
+import {HttpReqService} from '../services/http-req.service';
 
 @Component({
   selector: 'app-root',
@@ -19,12 +15,13 @@ export class AppComponent implements OnInit {
   StocksData: SingleStock[] = [];
   userId = 111;
 
-  constructor(private http: HttpClient, private ioService: WebSocketService, public dialog: MatDialog) {
+  constructor(private httpService: HttpReqService, private ioService: WebSocketService, public dialog: MatDialog) {
+
   }
 
   ngOnInit() {
     console.log('ng on init ');
-    this.dataFromBackend().subscribe((data) => {
+    this.httpService.dataFromBackend().subscribe((data) => {
       console.log('dataFromBackend ');
       this.StocksData = data.result;
     });
@@ -34,15 +31,17 @@ export class AppComponent implements OnInit {
       this.StocksData = data.result;
     });
   }
+
   openUserAccDialog(): void {
     let userStocks;
-    this.getUserStocks().subscribe((data) => {
+    this.httpService.getUserStocks(this.userId).subscribe((data) => {
       console.log('getUserStocks ');
       userStocks = data.result;
       console.log('userStocks ', userStocks);
       if (!userStocks) {
         userStocks = 0;
       }
+
       const dialogRef = this.dialog.open(UserAccountComponent, {
         width: '100vw',
         height: '80vh',
@@ -55,12 +54,20 @@ export class AppComponent implements OnInit {
     });
   }
 
-  getUserStocks(): Observable<any> {
-    return this.http.get<any>('/getUserStocks/' + this.userId);
+  createUserAcc(): void {
+    this.httpService.createUserAccIfNeeded(this.userId).subscribe((data) => {
+      console.log('createUserAccIfNeeded ');
+      const res = data.result;
+      console.log(res);
+    });
+  }
+  buyButtonClick(event): void {
+    console.log('buyClick ', event);
+    this.httpService.buyClick(event).subscribe((data) => {
+      const res = data.result;
+      console.log(res);
+    });
   }
 
-  dataFromBackend(): Observable<any> {
-    return this.http.get<SingleStock[]>('/stocks');
-  }
 }
 

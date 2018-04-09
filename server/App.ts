@@ -8,9 +8,7 @@ export class App {
   StocksData: SingleStock[] = [];
   expressApp: any;
   io: any;
-  // userAccount: UserStocks[] = [];
   usersAccountsArrById: any = {};// Map
-  // userAccountManager: any;
 
 
   constructor() {
@@ -29,6 +27,7 @@ export class App {
     router.get('/stocks', (request, response) => {
       response.json({result: this.StocksData});
     });
+
     /*initUserAccount*/
     router.get('/initUserAccountIfNeeded/:userId', (request, response) => {
       let data;
@@ -40,7 +39,6 @@ export class App {
       response.json({result: 1});
     });
 
-
     /*buyStocks*/
     router.get('/stocks/buy/:userId/:stockMarketID/:stockAmount/:purchasePrice', (request, response) => {
       console.log('Lets buyyyyy ');
@@ -49,14 +47,16 @@ export class App {
       console.log('data.userId ', data.userId);
       console.log('this.usersAccountsArrById ', this.usersAccountsArrById);
       console.log('this.usersAccountsArrById[data.userId] ', this.usersAccountsArrById[data.userId]);
+      this.initUserAccountIfNeeded(data.userId);
       const userAccount = this.usersAccountsArrById[data.userId];
       console.log('userAccount ', userAccount);
       const buyUserStock = new UserStocks(data.userId, data.stockMarketID, data.stockAmount, data.purchasePrice);
-      userAccount.push(buyUserStock);
       console.log('buyUserStock ', buyUserStock);
+      userAccount.push(buyUserStock);
       response.json({result: 1});
       console.log(this.usersAccountsArrById);
     });
+
     /*getUserStocks*/
     router.get('/getUserStocks/:userId', (request, response) => {
       let data;
@@ -71,9 +71,18 @@ export class App {
     });
 
     /*sellStocks*/
-    router.get('/stocks/sell/:user', (request, response) => {
-      let data;
-      data = request.params;
+    router.post('/stocks/sell', (request, response) => {
+      const data = request.body;
+      console.log('data ', data);
+      console.log('sellStocks, stockMarketID ', data.UserStocks.stockMarketID, data.UserStocks.stockAmount, data.UserStocks.userId);
+      const userAccount = this.usersAccountsArrById[data.UserStocks.userId];
+      console.log('userAccount ', userAccount);
+      userAccount.filter((stock) => {
+        console.log('stock ', stock);
+        return (stock.stockMarketID !== data.UserStocks.stockMarketID && stock.stockAmount !== data.UserStocks.stockAmount);
+      });
+      console.log('userAccount ', userAccount);
+      response.json({result: 0});
     });
   }
 
@@ -81,7 +90,6 @@ export class App {
     console.log('this.usersAccountsArrById ');
     this.usersAccountsArrById[userId] = this.usersAccountsArrById[userId] ?  this.usersAccountsArrById[userId] : [];
   }
-
 
   private loadSingleStockData (): void {
     this.StocksData.push(new SingleStock(1, 'Teva', 11000, 12));

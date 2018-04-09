@@ -15,6 +15,6 @@
       </mat-card-content>
     </mat-card>
 
-    <app-single-stock [userId] = "userId" *ngFor='let item of StocksData' [data] = "item"></app-single-stock>
+    <app-single-stock [userId] = "userId" *ngFor='let item of StocksData' [data] = "item" (createUserAcc) = "createUserAcc($event)" (userBoughtStock) = "buyButtonClick($event)"></app-single-stock>
   </div>
 </div>

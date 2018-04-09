@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SingleStock} from '../../../model/single-stock';
 import {UserStocks} from '../../../model/user-stocks';
 
@@ -8,10 +8,9 @@ import {UserStocks} from '../../../model/user-stocks';
   styleUrls: ['./user-stock.component.css']
 })
 export class UserStockComponent implements OnInit {
-  @Input()
-  data: UserStocks;
-  @Input()
-  StocksData: SingleStock[];
+  @Input() data: UserStocks;
+  @Input() StocksData: SingleStock[];
+  @Output() sellStock: EventEmitter<any> = new EventEmitter<any>();
   CurrentStockData: SingleStock;
   constructor() {
   }
@@ -26,6 +25,11 @@ export class UserStockComponent implements OnInit {
         break;
       }
     }
+  }
+
+  onSellButton(): void {
+    const sellData = Object.assign({StockData : this.CurrentStockData, UserStocks: this.data })
+    this.sellStock.emit(sellData);
   }
 
 }
