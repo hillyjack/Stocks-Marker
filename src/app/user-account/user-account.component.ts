@@ -35,7 +35,8 @@ export class UserAccountComponent implements OnInit {
     console.log('sellButtonClick event', event);
     this.httpService.sellClick(event).subscribe((data) => {
       const res = data.result;
-      console.log(res);
+      console.log('res', res);
+      this.userStocks = res;
     });
   }
 }

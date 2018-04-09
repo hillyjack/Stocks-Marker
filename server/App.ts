@@ -2,6 +2,7 @@ import * as express from 'express';
 import { SingleStock } from '../model/single-stock';
 import * as bodyParser from 'body-Parser';
 import {UserStocks} from '../model/user-stocks';
+import index from '@angular/cli/lib/cli';
 
 
 export class App {
@@ -26,17 +27,6 @@ export class App {
     /*getAllStocksData*/
     router.get('/stocks', (request, response) => {
       response.json({result: this.StocksData});
-    });
-
-    /*initUserAccount*/
-    router.get('/initUserAccountIfNeeded/:userId', (request, response) => {
-      let data;
-      console.log(request.params);
-      console.log('this.usersAccountsArrById ', this.usersAccountsArrById);
-      data = request.params;
-      this.initUserAccountIfNeeded(data.userId);
-      console.log(this.usersAccountsArrById);
-      response.json({result: 1});
     });
 
     /*buyStocks*/
@@ -77,18 +67,20 @@ export class App {
       console.log('sellStocks, stockMarketID ', data.UserStocks.stockMarketID, data.UserStocks.stockAmount, data.UserStocks.userId);
       const userAccount = this.usersAccountsArrById[data.UserStocks.userId];
       console.log('userAccount ', userAccount);
-      userAccount.filter((stock) => {
-        console.log('stock ', stock);
-        return (stock.stockMarketID !== data.UserStocks.stockMarketID && stock.stockAmount !== data.UserStocks.stockAmount);
-      });
+      userAccount.forEach((stock, index) => {
+        if (stock.stockMarketID === data.UserStocks.stockMarketID && stock.stockAmount === data.UserStocks.stockAmount) {
+          userAccount.splice(index, 1);
+        }
+       });
       console.log('userAccount ', userAccount);
-      response.json({result: 0});
+      response.json({result: userAccount});
     });
   }
 
   private initUserAccountIfNeeded(userId) {
     console.log('this.usersAccountsArrById ');
     this.usersAccountsArrById[userId] = this.usersAccountsArrById[userId] ?  this.usersAccountsArrById[userId] : [];
+    console.log(this.usersAccountsArrById);
   }
 
   private loadSingleStockData (): void {

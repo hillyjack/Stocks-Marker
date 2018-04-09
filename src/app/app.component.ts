@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
     });
   }
 
+
   openUserAccDialog(): void {
     let userStocks;
     this.httpService.getUserStocks(this.userId).subscribe((data) => {

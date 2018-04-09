@@ -28,9 +28,10 @@ export class SingleStockComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed res, ', result);
+
       if (result) {
         this.userBoughtStock.emit(result);
-        console.log('this.userBoughtStock.emit');
+        console.log('this.userBoughtStock.emit ');
       }
     });
   }

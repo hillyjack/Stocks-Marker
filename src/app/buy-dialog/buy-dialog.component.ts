@@ -16,7 +16,7 @@ export class BuyDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<BuyDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
-    console.log(data);
+    // console.log(data);
     this.buyDetails = data.SingleStock;
     this.userId = data.userId;
   }
@@ -24,7 +24,7 @@ export class BuyDialogComponent implements OnInit {
   ngOnInit() {}
   onBuyClick(): void {
     if (this.selected) {
-      const data = Object.assign({userId : this.userId, stockMarketID : this.buyDetails.stockMarketID, stockAmount : this.selected, purchasePrice : this.buyDetails.CurrentPrice});
+      const data = {userId : this.userId, stockMarketID : this.buyDetails.stockMarketID, stockAmount : this.selected, purchasePrice : this.buyDetails.CurrentPrice};
       this.dialogRef.close(data);
     } else { alert('You have to choose amount'); }
   }
