@@ -2,7 +2,6 @@ import * as express from 'express';
 import { SingleStock } from '../model/single-stock';
 import * as bodyParser from 'body-Parser';
 import {UserStocks} from '../model/user-stocks';
-import {forEach} from '@angular/router/src/utils/collection';
 
 
 export class App {
@@ -80,20 +79,7 @@ export class App {
 
   private initUserAccountIfNeeded(userId) {
     console.log('this.usersAccountsArrById ');
-    let userIdExist;
-/*    for (const key in this.usersAccountsArrById) {
-      console.log('in the for of this.usersAccountsArrById ', this.usersAccountsArrById);
-      if (key === userId) {
-        userIdExist = true;
-        break;
-      }
-    }*/
     this.usersAccountsArrById[userId] = this.usersAccountsArrById[userId] ?  this.usersAccountsArrById[userId] : [];
-
-    /*if (!userIdExist) {
-      // this.usersAccountsArrById[userId] = {};
-      this.usersAccountsArrById[userId] = [];
-    }*/
   }
 
 
