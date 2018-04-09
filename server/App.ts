@@ -29,11 +29,10 @@ export class App {
       response.json({result: this.StocksData});
     });
 
-    /*buyStocks*/
-    router.get('/stocks/buy/:userId/:stockMarketID/:stockAmount/:purchasePrice', (request, response) => {
-      console.log('Lets buyyyyy ');
-      const data: UserStocks = request.params;
-      console.log('data ', request.params);
+    /*buyStocksPost*/
+    router.post('/stocks/buyPost', (request, response) => {
+      const data: UserStocks = request.body.UserStocks;
+      console.log('/stocks/buyPost data ', data);
       console.log('data.userId ', data.userId);
       console.log('this.usersAccountsArrById ', this.usersAccountsArrById);
       console.log('this.usersAccountsArrById[data.userId] ', this.usersAccountsArrById[data.userId]);
@@ -42,6 +41,7 @@ export class App {
       console.log('userAccount ', userAccount);
       const buyUserStock = new UserStocks(data.userId, data.stockMarketID, data.stockAmount, data.purchasePrice);
       console.log('buyUserStock ', buyUserStock);
+      console.log('buyUserStock ', data);
       userAccount.push(buyUserStock);
       response.json({result: 1});
       console.log(this.usersAccountsArrById);
@@ -63,12 +63,12 @@ export class App {
     /*sellStocks*/
     router.post('/stocks/sell', (request, response) => {
       const data = request.body;
-      console.log('data ', data);
+      console.log('stocks/sell data ', data);
       console.log('sellStocks, stockMarketID ', data.UserStocks.stockMarketID, data.UserStocks.stockAmount, data.UserStocks.userId);
       const userAccount = this.usersAccountsArrById[data.UserStocks.userId];
       console.log('userAccount ', userAccount);
       userAccount.forEach((stock, index) => {
-        if (stock.stockMarketID === data.UserStocks.stockMarketID && stock.stockAmount === data.UserStocks.stockAmount) {
+        if (stock.stockMarketID === data.UserStocks.stockMarketID && stock.purchasePrice === data.UserStocks.purchasePrice && stock.stockAmount === data.UserStocks.stockAmount) {
           userAccount.splice(index, 1);
         }
        });

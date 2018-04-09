@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SingleStock} from '../../model/single-stock';
+import {UserStocks} from '../../model/user-stocks';
 
 import {WebSocketService} from '../services/web-socket.service';
 import {UserAccountComponent} from './user-account/user-account.component';
@@ -13,6 +14,7 @@ import {HttpReqService} from '../services/http-req.service';
 })
 export class AppComponent implements OnInit {
   StocksData: SingleStock[] = [];
+  updateUserStocks: UserStocks[] = [];
   userId = 111;
 
   constructor(private httpService: HttpReqService, private ioService: WebSocketService, public dialog: MatDialog) {
@@ -31,7 +33,7 @@ export class AppComponent implements OnInit {
       this.StocksData = data.result;
     });
   }
-  trackByFn(item){
+  trackByFn(item) {
     return item.stockMarketID || null;
   }
   openUserAccDialog(): void {
@@ -49,6 +51,15 @@ export class AppComponent implements OnInit {
         height: '80vh',
         data: {userStocks: userStocks, StocksData: this.StocksData }
       });
+      const sellEmit = dialogRef.componentInstance.onSellClick.subscribe((sellEmitData) => {
+        console.log('sellEmit data ', sellEmitData);
+        this.httpService.sellClick(sellEmitData).subscribe((sellClickData) => {
+
+          console.log('this.updateUserStocks', sellClickData.result);
+          dialogRef.componentInstance.userStocks = sellClickData.result;
+
+        });
+      });
 
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
@@ -65,7 +76,7 @@ export class AppComponent implements OnInit {
   }
   buyButtonClick(event): void {
     console.log('buyClick ', event);
-    this.httpService.buyClick(event).subscribe((data) => {
+    this.httpService.buyClickPost(event).subscribe((data) => {
       const res = data.result;
       console.log(res);
     });
