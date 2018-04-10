@@ -52,9 +52,8 @@ export class AppComponent implements OnInit {
         data: {userStocks: userStocks, StocksData: this.StocksData }
       });
       const sellEmit = dialogRef.componentInstance.onSellClick.subscribe((sellEmitData) => {
-        console.log('sellEmit data ', sellEmitData);
-        this.httpService.sellClick(sellEmitData).subscribe((sellClickData) => {
-
+          console.log('sellEmit data ', sellEmitData);
+          this.httpService.sellClick(sellEmitData).subscribe((sellClickData) => {
           console.log('this.updateUserStocks', sellClickData.result);
           dialogRef.componentInstance.userStocks = sellClickData.result;
 
