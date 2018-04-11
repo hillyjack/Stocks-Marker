@@ -41,3 +41,38 @@ mat-card {
   background-color: grey;
   color: #1c2e6c;
 }
+
+
+button.mat-menu-item {
+  line-height: 24px !important;
+}
+a.mat-menu-item > mat-icon {
+  margin-bottom: 14px;
+}
+.mat-icon svg {
+  height: 50px;
+  width: 50px;
+}
+
+/*
+.scaling-svg-container {
+  position: relative;
+  height: 0;
+  width: 100%;
+  padding: 0;
+  padding-bottom: 100%;
+}
+*/
+
+/*.scaling-svg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 4vw;
+  top: 9vh;
+}*/
+
+/*button.mat-icon-button{
+  height: 100px;
+  width: 100px;
+}*/

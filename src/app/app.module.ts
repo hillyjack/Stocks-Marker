@@ -14,6 +14,9 @@ import { UserAccountComponent } from './user-account/user-account.component';
 import { UserStockComponent } from './user-stock/user-stock.component';
 import {HttpReqService} from '../services/http-req.service';
 
+import {MatIconRegistry} from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+
 
 @NgModule({
   declarations: [
@@ -37,4 +40,8 @@ import {HttpReqService} from '../services/http-req.service';
   providers: [WebSocketService, HttpReqService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
+    matIconRegistry.addSvgIconSet(domSanitizer.bypassSecurityTrustResourceUrl('./assets/mdi.svg'));
+  }
+}
