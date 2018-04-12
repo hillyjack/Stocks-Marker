@@ -17,7 +17,6 @@ export class BuyDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<BuyDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
-    // console.log(data);
     this.buyDetails = data.SingleStock;
     this.userId = data.userId;
   }

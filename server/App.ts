@@ -3,6 +3,8 @@ import { SingleStock } from '../model/single-stock';
 import * as bodyParser from 'body-Parser';
 import {UserStocks} from '../model/user-stocks';
 import index from '@angular/cli/lib/cli';
+import {Stock} from './DatabaseDAL';
+import db from './DatabaseDAL';
 
 
 export class App {
@@ -13,20 +15,29 @@ export class App {
 
 
   constructor() {
-    this.loadSingleStockData();
     this.expressApp = express();
     this.expressApp.use(express.static('website'));
     this.middleware();
     this.mountRoutes();
+    db.initConnection().then(() => {
+      this.loadSingleStockDataDB();
+    });
   }
-
 
   mountRoutes(): void {
     const router = express.Router();
     this.expressApp.use('/', router);
+
     /*getAllStocksData*/
     router.get('/stocks', (request, response) => {
-      response.json({result: this.StocksData});
+      // response.json({result: this.StocksData});
+      db.getStocks().then( stocksData => {
+          console.log('App - getAllStocksData stocksData - ', stocksData);
+          this.initLocalStocksData(stocksData);
+          response.json({result: this.StocksData});
+        }
+      );
+
     });
 
     /*buyStocksPost*/
@@ -83,16 +94,40 @@ export class App {
     console.log(this.usersAccountsArrById);
   }
 
-  private loadSingleStockData (): void {
-    this.StocksData.push(new SingleStock(1, 'Teva', 11000, 12));
-    this.StocksData.push(new SingleStock(2, 'Google', 21200, 15));
-    this.StocksData.push(new SingleStock(3, 'Facebook', 12200, 25));
-    this.StocksData.push(new SingleStock(4, 'RDV', 45000, 26));
-    this.StocksData.push(new SingleStock(5, 'Drivenets', 99003, 24));
+  private loadSingleStockDataDB (): void {
+    this.addStock(1, 'Teva', 11000);
+    this.addStock(2, 'Google', 21200);
+    this.addStock(3, 'Facebook', 12200);
+    this.addStock(4, 'RDV', 45000);
+    this.addStock(5, 'Drivenets', 99003);
+  }
+
+  private async addStock(stockID, stockName, startingPrice) {
+    const res = await db.createStock(stockID, stockName, startingPrice);
+    // console.log(res);
+  }
+
+  private initLocalStocksData (stocksArr: any[]): void {
+    stocksArr.forEach((stockItem) => {
+      stockItem = stockItem.dataValues;
+      console.log('initLocalStocksData stockItem - ', stockItem)
+      this.StocksData.push(new SingleStock(stockItem.stockID, stockItem.stockName, stockItem.startingPrice));
+    });
     setInterval(() => {
       this.changeStockCurrentPrice();
     }, 10000);
   }
+
+  // private loadSingleStockData (): void {
+  //   this.StocksData.push(new SingleStock(1, 'Teva', 11000, 12));
+  //   this.StocksData.push(new SingleStock(2, 'Google', 21200, 15));
+  //   this.StocksData.push(new SingleStock(3, 'Facebook', 12200, 25));
+  //   this.StocksData.push(new SingleStock(4, 'RDV', 45000, 26));
+  //   this.StocksData.push(new SingleStock(5, 'Drivenets', 99003, 24));
+  //   setInterval(() => {
+  //     this.changeStockCurrentPrice();
+  //   }, 10000);
+  // }
 
   private changeStockCurrentPrice(): void {
     console.log('changeStockCurrentPrice');
@@ -128,18 +163,5 @@ export class App {
     this.expressApp.use(bodyParser.urlencoded({ extended : false }));
   }
 
-  /*manageUserAccount (userId): any {
-    const userID = userId;
-    let userStocksAccount = [];
-    return {
-      buyStock: (UserStocks) => {
-        userStocksAccount.push(UserStocks);
-        console.log(userID + ' ' + userStocksAccount);
-      },
-      sellStock: (SingleStock) => {
-        console.log(userID + ' ' + userStocksAccount);
-      }
-    };
-  }*/
 }
 export default new App();

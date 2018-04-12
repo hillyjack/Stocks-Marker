@@ -8,8 +8,10 @@
     "start": "npm run build -- -w"
   },
   "dependencies": {
+    "@types/sequelize": "^4.27.14",
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
+    "sequelize": "^4.37.6",
     "socket.io": "^2.1.0",
     "ts-node": "^5.0.1",
     "typescript": "^2.8.1"

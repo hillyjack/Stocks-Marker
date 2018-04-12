@@ -7,7 +7,8 @@ export class SingleStock {
   change: number;
   changeDir: boolean;
 
-  constructor(stockMarketID, stockMarketIndex, StartingPrice, change) {
+  constructor(stockMarketID, stockMarketIndex, StartingPrice) {
+    const change = StartingPrice / 2000;
     this.stockMarketID = stockMarketID;
     this.stockMarketIndex = stockMarketIndex;
     this.StartingPrice = StartingPrice;

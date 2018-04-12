@@ -17,9 +17,9 @@ export class HttpReqService {
     return this.http.get<SingleStock[]>('/stocks');
   }
 
-  buyClickPost(UserStocks): Observable<any> {
-    console.log('inside buyClick POST ', UserStocks);
-    return this.http.post<any>('/stocks/buyPost', {UserStocks});
+  buyClickPost(buyData): Observable<any> {
+    console.log('inside buyClick POST ', buyData);
+    return this.http.post<any>('/stocks/buyPost', {buyData});
   }
 
   sellClick(sellData): Observable<any> {

@@ -13,6 +13,7 @@ import { BuyDialogComponent } from './buy-dialog/buy-dialog.component';
 import { UserAccountComponent } from './user-account/user-account.component';
 import { UserStockComponent } from './user-stock/user-stock.component';
 import {HttpReqService} from '../services/http-req.service';
+import {StockService} from '../services/stock.service';
 
 import {MatIconRegistry} from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -37,7 +38,7 @@ import { DomSanitizer } from '@angular/platform-browser';
     FlexLayoutModule,
     HttpClientModule
   ],
-  providers: [WebSocketService, HttpReqService],
+  providers: [WebSocketService, HttpReqService, StockService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
