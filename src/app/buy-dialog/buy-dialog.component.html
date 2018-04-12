@@ -17,7 +17,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <p>Total Price: {{selected * buyDetails.CurrentPrice}}</p>
+    <p>Total Price: {{selected * buyDetails.CurrentPrice| number : '1.2-2'}}</p>
     <mat-card-actions fxLayout="row"
                       fxLayoutAlign="space-around center">
       <button (click)="onBuyClick()" fxFlex="20" mat-raised-button >Buy</button>

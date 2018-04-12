@@ -5,22 +5,22 @@
       <mat-card-title>{{CurrentStockData.stockMarketIndex}}</mat-card-title>
     </div>
     <div fxFlex="10">
-      <p>{{data.stockAmount}}</p>
+      <p>{{data.amountOfStocks}}</p>
     </div>
     <div fxFlex="10">
-      <p>{{data.purchasePrice}}</p>
+      <p>{{data.stockPurchasedPrice}}</p>
     </div>
     <div fxFlex="10">
-      <p>{{CurrentStockData.CurrentPrice}}</p>
+      <p>{{CurrentStockData.CurrentPrice | number : '1.2-2'}}</p>
     </div>
     <div fxFlex="10">
-      <p>{{CurrentStockData.CurrentPrice - data.purchasePrice}}</p>
+      <p>{{CurrentStockData.CurrentPrice - data.stockPurchasedPrice  | number : '1.2-2'}}</p>
     </div>
     <mat-card-actions fxFlex="8" fxLayout="row"
                       fxLayoutAlign="space-around center">
       <div class="arrow-image">
-        <img *ngIf="!(CurrentStockData.CurrentPrice - data.purchasePrice > 0)" src="../../assets/images/Red_Arrow_Down.png">
-        <img *ngIf="(CurrentStockData.CurrentPrice - data.purchasePrice > 0)" src="../../assets/images/Green_Arrow_Up.png">
+        <img *ngIf="!(CurrentStockData.CurrentPrice - data.stockPurchasedPrice > 0)" src="../../assets/images/Red_Arrow_Down.png">
+        <img *ngIf="(CurrentStockData.CurrentPrice - data.stockPurchasedPrice > 0)" src="../../assets/images/Green_Arrow_Up.png">
       </div>
       <button (click)="onSellButton()" mat-raised-button>Sell</button>
       <!--<button mat-button>Sell</button>-->

@@ -17,8 +17,8 @@ export class UserAccountComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any) {
     this.userStocks = data.userStocks;
     this.StocksData = data.StocksData;
-    console.log('this.userStocks', this.userStocks);
-    console.log('this.StocksData ', this.StocksData);
+    console.log('UserAccountComponent this.userStocks', this.userStocks);
+    console.log('UserAccountComponent this.StocksData ', this.StocksData);
     this.onSellClick = new EventEmitter<any>(true);
   }
 

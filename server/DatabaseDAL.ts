@@ -27,7 +27,6 @@ export class DatabaseDAL {
   }
 
   public createStock(stockID, stockName, startingPrice): void {
-
     this.stock.findOrCreate({where: {stockID, stockName, startingPrice}})
       .spread((user, created) => {
         console.log(user.get({
@@ -50,21 +49,31 @@ export class DatabaseDAL {
   }
 
   // public createUser(userID, userName, userPassword): Promise<User> {
-  //   return this.stock.create({
+  //   return this.user.create({
   //     userID,
   //     userName,
   //     userPassword
   //   });
   // }
-  //
-  // public createUserStock(userID, stockID, stockPurchasedPrice, amountOfStocks): Promise<UserStock> {
-  //   return this.stock.create({
-  //     userID,
-  //     stockID,
-  //     stockPurchasedPrice,
-  //     amountOfStocks
-  //   });
-  // }
+
+  public createUserStock(userID, stockID, amountOfStocks, stockPurchasedPrice): Promise<UserStock> {
+    return this.userStock.create({
+      userID,
+      stockID,
+      amountOfStocks,
+      stockPurchasedPrice
+    });
+  }
+
+  public async getUserStocksById(userId): Promise<any> {
+    const res = await this.userStock.findAll({
+      attributes: ['userID', 'stockID', 'stockPurchasedPrice', 'amountOfStocks'],
+      where: {
+        userID: userId
+      }
+    });
+    return res;
+  }
 
   seqAuthenticate(): void {
     this.sequelize.authenticate()
@@ -87,26 +96,29 @@ export class DatabaseDAL {
       startingPrice: {type: SeqObj.INTEGER}
     });
 
-    console.log('finish seqDefineModel');
     // this.user = this.sequelize.define('user', {
     //   userID: {type: SeqObj.INTEGER},
     //   userName: {type: SeqObj.STRING},
     //   userPassword: {type: SeqObj.INTEGER}
     // });
-    //
-    // this.userStock = this.sequelize.define('userStock', {
-    //   stockID: {type: SeqObj.INTEGER},
-    //   userID: {type: SeqObj.INTEGER},
-    //   stockPurchasedPrice: {type: SeqObj.INTEGER},
-    //   amountOfStocks: {type: SeqObj.INTEGER}
-    // });
+
+    this.userStock = this.sequelize.define('userStock', {
+      stockID: {type: SeqObj.INTEGER},
+      userID: {type: SeqObj.INTEGER},
+      amountOfStocks: {type: SeqObj.INTEGER},
+      stockPurchasedPrice: {type: SeqObj.BIGINT}
+    });
+    console.log('finish seqDefineModel');
   }
 
   private async syncDb() {
     await this.stock.sync();
-    console.log('finish syncDb');
     // await this.user.sync();
-    // await this.userStock.sync();
+    await this.userStock.sync();
+
+    this.userStock.hasMany(this.stock, {foreignKey: 'stockID'});
+    this.stock.belongsTo(this.userStock, {foreignKey: 'stockID'});
+    console.log('finish syncDb');
   }
 }
 export default new DatabaseDAL();
@@ -124,9 +136,9 @@ export interface Stock {
 //   userPassword: number;
 // }
 //
-// export interface UserStock {
-//   userID: number;
-//   stockID: number;
-//   stockPurchasedPrice: number;
-//   amountOfStocks: number;
-// }
+export interface UserStock {
+  userID: number;
+  stockID: number;
+  amountOfStocks: number;
+  stockPurchasedPrice: number;
+}

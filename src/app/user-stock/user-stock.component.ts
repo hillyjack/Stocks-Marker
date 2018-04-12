@@ -8,7 +8,7 @@ import {UserStocks} from '../../../model/user-stocks';
   styleUrls: ['./user-stock.component.css']
 })
 export class UserStockComponent implements OnInit {
-  @Input() data: UserStocks;
+  @Input() data: any;
   @Input() StocksData: SingleStock[];
   @Output() sellStock: EventEmitter<any> = new EventEmitter<any>();
   CurrentStockData: SingleStock;
@@ -19,7 +19,7 @@ export class UserStockComponent implements OnInit {
     console.log('UserStockComponent ', this.data);
     console.log('this.StocksData ', this.StocksData);
     for (let i = 0; i < this.StocksData.length; i++) {
-      if (this.StocksData[i].stockMarketID === Number(this.data.stockMarketID)) {
+      if (this.StocksData[i].stockMarketID === Number(this.data.stockID)) {
         this.CurrentStockData = this.StocksData[i];
         console.log(this.CurrentStockData);
         break;

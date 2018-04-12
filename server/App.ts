@@ -21,6 +21,10 @@ export class App {
     this.mountRoutes();
     db.initConnection().then(() => {
       this.loadSingleStockDataDB();
+      db.getStocks().then(stocksData => {
+        console.log('App - getAllStocksData stocksData - ', stocksData);
+        this.initLocalStocksData(stocksData);
+      });
     });
   }
 
@@ -31,18 +35,13 @@ export class App {
     /*getAllStocksData*/
     router.get('/stocks', (request, response) => {
       // response.json({result: this.StocksData});
-      db.getStocks().then( stocksData => {
-          console.log('App - getAllStocksData stocksData - ', stocksData);
-          this.initLocalStocksData(stocksData);
-          response.json({result: this.StocksData});
-        }
-      );
-
+      response.json({result: this.StocksData});
     });
 
     /*buyStocksPost*/
     router.post('/stocks/buyPost', (request, response) => {
-      const data: UserStocks = request.body.UserStocks;
+      console.log('/stocks/buyPost data ', request.body.buyData)
+      const data: UserStocks = request.body.buyData;
       console.log('/stocks/buyPost data ', data);
       console.log('data.userId ', data.userId);
       console.log('this.usersAccountsArrById ', this.usersAccountsArrById);
@@ -54,8 +53,11 @@ export class App {
       console.log('buyUserStock ', buyUserStock);
       console.log('buyUserStock ', data);
       userAccount.push(buyUserStock);
-      response.json({result: 1});
-      console.log(this.usersAccountsArrById);
+      db.createUserStock(data.userId, data.stockMarketID, data.stockAmount, data.purchasePrice).then((res) => {
+        console.log('App db.createUserStock res ', res);
+        response.json({result: 1});
+        console.log(this.usersAccountsArrById);
+      });
     });
 
     /*getUserStocks*/
@@ -63,9 +65,11 @@ export class App {
       let data;
       data = request.params;
       try {
-      const userAccount = this.usersAccountsArrById[data.userId];
-        response.json({result: userAccount});
-        console.log(userAccount);
+        // const userAccount = this.usersAccountsArrById[data.userId];
+        db.getUserStocksById(data.userId).then(userAccount => {
+          console.log('getUserStocksById userAccount', userAccount);
+          response.json({result: userAccount});
+        });
       } catch {
         response.json({result: 0});
       }
